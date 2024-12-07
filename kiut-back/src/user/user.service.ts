@@ -11,7 +11,7 @@ export class UserService {
     private userRepository: UserRepository,
   ) {}
 
-  createUser(createUserDto: User): Promise<Partial<User>> {
+  createUser(createUserDto: CreateUserDto): Promise<Partial<User>> {
     return this.userRepository.createUser(createUserDto);
   }
 
@@ -23,8 +23,12 @@ export class UserService {
      return this.userRepository.deleteUser(id);
    }
 
-   updateUser(id: string, updateUserDto: User){
+   updateUser(id: string, updateUserDto: CreateUserDto){
      return this.userRepository.updateUser(id, updateUserDto);
+   }
+
+   getUserById(id: string){
+     return this.userRepository.getUserById(id);
    }
 
   }

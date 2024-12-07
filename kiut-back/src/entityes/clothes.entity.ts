@@ -1,9 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { v4 as UUID } from 'uuid';
 
 @Entity()
 export class Clothes {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn( 'uuid' )
+  id: string = UUID();
 
   @Column()
   name: string;

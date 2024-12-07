@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { CreateUserDto } from "src/dto´s/createuserdto";
 import { User } from "src/entityes/user.entity";
 import { Repository } from "typeorm";
 
@@ -11,7 +12,7 @@ export class UserRepository {
     ) {}
 
     // Crear usuario 
-    async createUser(createUserDto: User): Promise<Partial<User>> {
+    async createUser(createUserDto: CreateUserDto): Promise<Partial<User>> {
         try {
             const newUser = this.userRepository.create(createUserDto); // No requiere await
             await this.userRepository.save(newUser);
@@ -60,7 +61,7 @@ export class UserRepository {
         }
     }
 
-    async updateUser(id: string, updateUserDto: User): Promise<Partial<User>> {
+    async updateUser(id: string, updateUserDto: CreateUserDto): Promise<Partial<User>> {
         try {
             const user = await this.userRepository.findOneBy({ id });
             if (!user) {
@@ -77,5 +78,14 @@ export class UserRepository {
             console.error('Error updating user:', error);
             throw new InternalServerErrorException('Ocurrió un error al actualizar el usuario.');
         }
+    }
+
+    async getUserById(id: string): Promise<Partial<User>> {
+        const user = await this.userRepository.findOneBy({ id });
+        if (!user) {
+            throw new NotFoundException(`Usuario con ID ${id} no encontrado.`);
+        }
+        const { password, ...userNoPassword } = user;
+        return userNoPassword;
     }
 }

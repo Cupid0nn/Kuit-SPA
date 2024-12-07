@@ -3,33 +3,31 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Clothes } from '../entityes/clothes.entity';
 import { CreateClothesDto } from '../dto´s/createclothedto';
+import { ClothesRepository } from './clothes.repository';
 
 @Injectable()
 export class ClothesService {
   constructor(
-    @InjectRepository(Clothes)
-    private clothesRepository: Repository<Clothes>,
+    private clothesRepository: ClothesRepository,
   ) {}
 
-  create(createClothesDto: CreateClothesDto): Promise<Clothes> {
-    const clothes = this.clothesRepository.create(createClothesDto);
-    return this.clothesRepository.save(clothes);
+  createClothes(createClothesDto: CreateClothesDto){
+    return this.clothesRepository.createClothes(createClothesDto);
   }
 
-  findAll(): Promise<Clothes[]> {
-    return this.clothesRepository.find();
+  getClothes(){
+    return this.clothesRepository.getClothes();
   }
 
-  findOne(id: number): Promise<Clothes> {
-    return this.clothesRepository.findOneBy({ id });
+  getOneClothes(id:string) {
+    return this.clothesRepository.getOneClothes(id);
   }
 
-  async update(id: number, updateClothesDto: CreateClothesDto): Promise<Clothes> {
-    await this.clothesRepository.update(id, updateClothesDto);
-    return this.clothesRepository.findOneBy({ id });
+   updateClothes(id: string, updateClothesDto: CreateClothesDto) {
+    return this.clothesRepository.updateClothes(id, updateClothesDto);
   }
 
-  async remove(id: number): Promise<void> {
-    await this.clothesRepository.delete(id);
+  DeleteClothes(id: string){
+     this.clothesRepository.deleteClothes(id);
   }
 }
