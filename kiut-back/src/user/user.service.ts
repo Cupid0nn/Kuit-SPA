@@ -3,34 +3,29 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from 'src/entityes/user.entity';
 import { CreateUserDto } from 'src/dto´s/createuserdto';
+import {UserRepository} from './user.repository';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
+    private userRepository: UserRepository,
   ) {}
 
-  create(CreateUserDto: CreateUserDto): Promise<User> {
-    const clothes = this.userRepository.create(CreateUserDto);
-    return this.userRepository.save(clothes);
+  createUser(createUserDto: User): Promise<Partial<User>> {
+    return this.userRepository.createUser(createUserDto);
   }
 
+   getUsers(){
+     return this.userRepository.getUsers();
+   }
 
-  findAll(): Promise<User[]> {
-    return this.userRepository.find();
-  }
+   deleteUser(id: string){
+     return this.userRepository.deleteUser(id);
+   }
 
-  findOne(id: string): Promise<User> {
-    return this.userRepository.findOneBy({ id });
-  }
+   updateUser(id: string, updateUserDto: User){
+     return this.userRepository.updateUser(id, updateUserDto);
+   }
 
-  async update(id: string, updateUserDto: CreateUserDto): Promise<User> {
-    await this.userRepository.update(id, updateUserDto);
-    return this.userRepository.findOneBy({ id });
   }
-
-  async remove(id: string): Promise<void> {
-    await this.userRepository.delete(id);
-  }
-}
+  
