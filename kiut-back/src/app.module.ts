@@ -22,7 +22,10 @@ import { UserModule } from './user/user.module';
         database: configService.get<string>('DB_DATABASE'),
         entities: [Clothes, User],
         synchronize: true,
-        dropSchema: true
+        dropSchema: true,
+        ssl:{
+          rejectUnauthorized: false
+        }
       }),
       inject: [ConfigService],
     }),
