@@ -5,6 +5,8 @@ import { ClothesModule } from './clothes/clothes.module';
 import { Clothes } from './entityes/clothes.entity';
 import { User } from './entityes/user.entity';
 import { UserModule } from './user/user.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -23,7 +25,7 @@ import { UserModule } from './user/user.module';
         entities: [Clothes, User],
         synchronize: true,
         dropSchema: true,
-        ssl:{
+        ssl: {
           rejectUnauthorized: false
         }
       }),
@@ -32,5 +34,7 @@ import { UserModule } from './user/user.module';
     ClothesModule,
     UserModule
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
