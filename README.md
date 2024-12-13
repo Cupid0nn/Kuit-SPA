@@ -1,4 +1,4 @@
-# Kuit-SPA
+# Kiut-SPA
 1. Estructura del Proyecto
 Frontend:
 
